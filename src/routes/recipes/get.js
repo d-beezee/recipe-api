@@ -1,3 +1,9 @@
-const route = (c, req, res) => res.status(200).json({ result: 'ok' })
+import db from "../../features/db"
 
-export default route
+export default (c, req, res) => {
+  db.push("recipes",{"asd":"asd"})
+  db.get("recipes").then(data =>
+    res.status(200).json({ result: data })
+  )
+
+};
