@@ -1,0 +1,26 @@
+
+  title: Recipe
+  type: object
+  examples:
+    - name: My recipe
+      ingredients:
+        - id: 1
+          count: 100
+          name: My ingredient
+          unit: ea
+  properties:
+    name:
+      type: string
+    ingredients:
+      type: array
+      items:
+        allOf:
+          - type: object
+            properties:
+              id:
+                type: integer
+              count:
+                type: number
+          - $ref: ./Ingredient.yaml
+  required:
+    - name

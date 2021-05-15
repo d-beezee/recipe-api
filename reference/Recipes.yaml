@@ -17,7 +17,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Ingredient'
+              $ref: ../models/Ingredient.yaml
             examples:
               example-1:
                 value:
@@ -34,7 +34,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Recipe'
+              $ref: ../models/Recipe.yaml
             examples:
               example-1:
                 value:
@@ -55,11 +55,11 @@ paths:
                 type: array
                 items:
                   allOf:
-                    - properties:
+                    - type: object
+                      properties:
                         id:
                           type: integer
-                      type: object
-                    - $ref: '#/components/schemas/Recipe'
+                    - $ref: ../models/Recipe.yaml
               examples:
                 example-1:
                   value:
@@ -71,43 +71,4 @@ paths:
                           name: My ingredient
                           unit: ea
 components:
-  schemas:
-    Ingredient:
-      title: Ingredient
-      type: object
-      properties:
-        name:
-          type: string
-        unit:
-          type: string
-      required:
-        - name
-      examples:
-        - name: My ingredient
-          unit: ea
-    Recipe:
-      title: Recipe
-      type: object
-      examples:
-        - name: My recipe
-          ingredients:
-            - id: 1
-              count: 100
-              name: My ingredient
-              unit: ea
-      properties:
-        name:
-          type: string
-        ingredients:
-          type: array
-          items:
-            allOf:
-              - type: object
-                properties:
-                  id:
-                    type: integer
-                  count:
-                    type: number
-              - $ref: '#/components/schemas/Ingredient'
-      required:
-        - name
+  schemas: {}
