@@ -1,0 +1,113 @@
+openapi: 3.1.0
+info:
+  title: Recipes
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /ingredients:
+    parameters: []
+    post:
+      summary: Create ingredient
+      operationId: post-ingredients
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ingredient'
+            examples:
+              example-1:
+                value:
+                  name: My ingredient
+                  unit: ea
+  /recipes:
+    post:
+      summary: Create a recipe
+      operationId: post-recipes
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+            examples:
+              example-1:
+                value:
+                  name: My recipe
+                  ingredients:
+                    - id: 1
+                      count: 100
+    get:
+      summary: ''
+      operationId: get-recipes
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - properties:
+                        id:
+                          type: integer
+                      type: object
+                    - $ref: '#/components/schemas/Recipe'
+              examples:
+                example-1:
+                  value:
+                    - id: 0
+                      name: My recipe
+                      ingredients:
+                        - id: 1
+                          count: 100
+                          name: My ingredient
+                          unit: ea
+components:
+  schemas:
+    Ingredient:
+      title: Ingredient
+      type: object
+      properties:
+        name:
+          type: string
+        unit:
+          type: string
+      required:
+        - name
+      examples:
+        - name: My ingredient
+          unit: ea
+    Recipe:
+      title: Recipe
+      type: object
+      examples:
+        - name: My recipe
+          ingredients:
+            - id: 1
+              count: 100
+              name: My ingredient
+              unit: ea
+      properties:
+        name:
+          type: string
+        ingredients:
+          type: array
+          items:
+            allOf:
+              - type: object
+                properties:
+                  id:
+                    type: integer
+                  count:
+                    type: number
+              - $ref: '#/components/schemas/Ingredient'
+      required:
+        - name
